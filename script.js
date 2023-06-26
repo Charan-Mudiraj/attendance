@@ -31,8 +31,8 @@ async function generate() {
     }
 }
 function copy_to_clipboard(){
-  result.select();
-  result.setSelectionRange(0, 99999);
+  // result.select();
+  // result.setSelectionRange(0, 99999);
   navigator.clipboard.writeText(result.value);
   alert("Attendance Copied !");
 }
