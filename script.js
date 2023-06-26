@@ -30,11 +30,11 @@ async function generate() {
         result.innerHTML += rollnos_abs[i] + '.' + names[rollnos_abs[i]-1] + '\n';
     }
 }
-function copy_to_clpiboard(){
+function copy_to_clipboard(){
   result.select();
   result.setSelectionRange(0, 99999);
   navigator.clipboard.writeText(result.value);
   alert("Attendance Copied !");
 }
 btn.addEventListener("click", generate);
-copy.addEventListener("click", copy_to_clpiboard);
+copy.addEventListener("click", copy_to_clipboard);
