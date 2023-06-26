@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Attendance</title>
+    <style>
+        h1{
+            font-family: 'Rajdhani', sans-serif;
+            text-align: center; 
+            background-color: aquamarine;
+            border-radius: 20px;
+            padding: 10px;
+            text-shadow: 1px 1px 25px rgb(0, 0, 0);
+            color: rgb(255, 55, 0);
+            border: 5px solid rgb(146, 83, 209);
+            box-shadow: 0px 0px 12px #ffffff;
+        }
+        .header{
+            display: flex;
+            justify-content: center;
+        }
+        body{
+            background-image: url("https://media.istockphoto.com/photos/old-wall-texture-cement-dark-black-gray-background-abstract-grey-picture-id1191995863?b=1&k=20&m=1191995863&s=612x612&w=0&h=BNLBbanq0MvmZZ_IeNaeHyVosRe-7Tm18W3MQHVPjvU=");
+        }
+        .search-block{
+            background-color: rgb(92, 92, 92);
+            height: 260px;
+            width: 90%;
+            border-radius: 20px;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+            /* position: absolute; */
+        }
+        p{
+            text-align: left;
+            font-size: 20px;
+            padding-left: 40px;
+            color: white;
+            font-family: 'Rajdhani', sans-serif;
+        }
+        #input{
+            height:120px;
+            width: 650px;
+            border-radius: 5px;
+            margin-bottom: 5px;
+        }
+        .result-block{
+            background-color: rgb(92, 92, 92);
+            height: 540px;
+            width: 90%;
+            border-radius: 20px;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+            /* position: absolute; */
+        }
+        #output{
+            height:400px;
+            width: 650px;
+            border-radius: 5px;
+            margin-bottom: 5px;
+        }
+        .temp{
+            display: flex;
+            flex-direction: column;
+            gap: 70px;
+        }
+        #submit{
+            margin-top: 5px;
+            border-radius: 8px;
+            block-size: 25px;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville&family=Rajdhani:wght@600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="header">
+        <h1>Attendance List Generator</h1>
+    </div>
+    <div class="temp">
+        <div class="search-block">
+            <p>Enter the Roll.no's separated by Spaces:</p>
+            <br>
+            <textarea id="input"></textarea>
+            <br>
+            <button id="submit">Generate</button>
+        </div>
+        <div class="result-block">
+            <p>Here is the Result:</p>
+            <br>
+            <textarea id="output"></textarea>
+            <br>
+        </div>
+    </div>
+    <script>
+        let input = document.getElementById("input");
+        let btn = document.getElementById("submit");
+        let result = document.getElementById("output");
+
+        async function myfun() {
+            let rollnos = input.value.split(" ");
+            let n = rollnos.length;
+            for(let i = 0; i < n; i++){
+                rollnos[i] = Number(rollnos[i]);
+            }
+            rollnos.sort(function(a, b){ return a - b; });
+
+            let file = await fetch("./rs.txt");
+            let text = await file.text();
+
+            let rollnos_abs = [];
+            let flag = 0;
+            for(let i = 0; i < 60; i++){
+                if(rollnos[flag] != i + 1){
+                    rollnos_abs.push(i + 1);
+                } else{
+                    flag++;
+                }
+            }
+            let m = rollnos_abs.length;
+            let names = text.split("\n");
+            result.value = 'No. of Students: ' + n + '\n';
+            for(let i = 0; i < m; i++){
+                result.value += rollnos_abs[i] + '.' + names[rollnos_abs[i] - 1] + '\n';
+            }
+        }
+
+        btn.addEventListener("click", myfun);
+    </script>
+</body>
+</html>
