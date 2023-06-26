@@ -32,6 +32,7 @@ async function generate() {
 }
 function copy_to_clpiboard(){
   navigator.clipboard.writeText(result.value);
+  alert("Attendance Copied !");
 }
 btn.addEventListener("click", generate);
 copy.addEventListener("click", copy_to_clpiboard);
